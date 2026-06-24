@@ -18,11 +18,11 @@
   --foreground: var(--bone);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* NOTE: do not add an unlayered `* { margin:0; padding:0 }` reset here.
+   Tailwind v4 utilities live in @layer, and unlayered rules override
+   layered ones — such a reset silently breaks every mx-auto / px / py
+   utility. Tailwind's Preflight (in the base layer) already handles the
+   reset and box-sizing correctly. */
 
 html {
   overflow-x: hidden;

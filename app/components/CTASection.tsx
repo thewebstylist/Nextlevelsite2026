@@ -1,177 +1,139 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { EASE } from '../lib/ease';
 
-interface Particle {
-  id: number;
-  left: number;
-  top: number;
-  size: number;
-  duration: number;
-  delay: number;
-  color: string;
-}
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
-function FloatingParticles() {
-  const [particles, setParticles] = useState<Particle[]>([]);
+const projectTypes = ['Original IP', 'Co-Development', 'Art & Cinematics', 'Consulting'];
 
-  useEffect(() => {
-    const colors = ['#0ea5e9', '#8b5cf6', '#ec4899', '#06b6d4'];
-    setParticles(
-      Array.from({ length: 30 }, (_, i) => ({
-        id: i,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        size: Math.random() * 4 + 1,
-        duration: Math.random() * 10 + 8,
-        delay: Math.random() * 5,
-        color: colors[i % colors.length],
-      }))
-    );
-  }, []);
+export default function CTASection() {
+  const [type, setType] = useState(projectTypes[0]);
+  const [sent, setSent] = useState(false);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p) => (
+    <section id="forge" className="relative py-28 sm:py-40 overflow-hidden">
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-[var(--bg-2)]" />
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[900px] max-h-[900px] ink-wash anim-float" />
+      <div className="absolute inset-0 paper-grid opacity-30" />
+
+      <div className="relative max-w-[1400px] mx-auto px-5 sm:px-8 grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+        {/* Left: pitch */}
         <motion.div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${p.left}%`,
-            top: `${p.top}%`,
-            width: p.size,
-            height: p.size,
-            background: p.color,
-            boxShadow: `0 0 ${p.size * 3}px ${p.color}`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.2, 0.8, 0.2],
-            scale: [1, 1.5, 1],
-          }}
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-      ))}
-    </div>
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.9, ease: EASE }}
+        >
+          <div className="flex items-center gap-3 mb-7">
+            <span className="font-jp text-[var(--crimson)] text-lg">鍛冶</span>
+            <span className="eyebrow text-[var(--ash)]">Start a Project · 06</span>
+          </div>
+          <h2 className="display-lg text-[var(--bone)]">
+            Forge your
+            <br />
+            world <span className="crimson-text">with us</span>
+          </h2>
+          <p className="mt-7 text-[var(--ash)] text-lg leading-relaxed max-w-md">
+            Whether it&apos;s a brand-new IP or a battle that needs reinforcements,
+            our blades are for hire. Tell us what you&apos;re building.
+          </p>
+
+          <div className="mt-10 flex flex-col gap-4">
+            <a href="mailto:forge@ronin.studio" data-cursor className="group flex items-center gap-4">
+              <span className="w-11 h-11 rounded-full hairline flex items-center justify-center text-[var(--crimson)] group-hover:bg-[var(--crimson)] group-hover:text-white transition-colors">
+                ✉
+              </span>
+              <span className="text-[var(--bone)] group-hover:text-white transition-colors tracking-wide">forge@ronin.studio</span>
+            </a>
+            <div className="flex items-center gap-4">
+              <span className="w-11 h-11 rounded-full hairline flex items-center justify-center text-[var(--crimson)]">⟁</span>
+              <span className="text-[var(--ash)] tracking-wide">Kyoto · Berlin · Remote</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Right: form */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
+          className="panel p-8 sm:p-10 relative"
+        >
+          <span className="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-[var(--crimson)] to-transparent" />
+          {sent ? (
+            <div className="py-16 text-center">
+              <div className="font-jp text-5xl text-[var(--crimson)] mb-5">了</div>
+              <h3 className="font-impact text-2xl uppercase text-[var(--bone)]">Message received</h3>
+              <p className="mt-3 text-[var(--ash)]">A rōnin will answer within two sunsets.</p>
+            </div>
+          ) : (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setSent(true);
+              }}
+              className="flex flex-col gap-6"
+            >
+              <div className="grid sm:grid-cols-2 gap-6">
+                <Field label="Name" placeholder="Your name" />
+                <Field label="Email" type="email" placeholder="you@studio.com" />
+              </div>
+
+              <div>
+                <label className="eyebrow text-[var(--ash)] block mb-3">Project Type</label>
+                <div className="flex flex-wrap gap-2.5">
+                  {projectTypes.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      data-cursor
+                      onClick={() => setType(t)}
+                      className={`px-4 py-2 text-xs tracking-[0.1em] uppercase border transition-all ${
+                        type === t
+                          ? 'border-[var(--crimson)] bg-[var(--crimson)]/10 text-[var(--bone)]'
+                          : 'border-white/12 text-[var(--ash)] hover:border-white/30'
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="eyebrow text-[var(--ash)] block mb-3">Tell us about it</label>
+                <textarea
+                  rows={4}
+                  required
+                  placeholder="The world you want to build…"
+                  className="w-full bg-[var(--bg)] border border-white/12 px-4 py-3 text-[var(--bone)] placeholder:text-[var(--ash)]/50 focus:border-[var(--crimson)] focus:outline-none transition-colors resize-none"
+                />
+              </div>
+
+              <button type="submit" data-cursor className="btn-crimson py-4 text-sm font-semibold tracking-[0.16em] uppercase mt-2">
+                Send the Signal
+              </button>
+            </form>
+          )}
+        </motion.div>
+      </div>
+    </section>
   );
 }
 
-export default function CTASection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
+function Field({ label, type = 'text', placeholder }: { label: string; type?: string; placeholder: string }) {
   return (
-    <section className="relative py-40 overflow-hidden">
-      {/* Deep atmospheric background */}
-      <div className="absolute inset-0 bg-[#020408]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#0a1f3d_0%,#020408_60%)]" />
-
-      {/* Volumetric light effect */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-20"
-        style={{
-          background: 'conic-gradient(from 180deg at 50% 0%, #0ea5e9, #8b5cf6, #0ea5e9)',
-          filter: 'blur(80px)',
-        }}
+    <div>
+      <label className="eyebrow text-[var(--ash)] block mb-3">{label}</label>
+      <input
+        type={type}
+        required
+        placeholder={placeholder}
+        className="w-full bg-[var(--bg)] border border-white/12 px-4 py-3 text-[var(--bone)] placeholder:text-[var(--ash)]/50 focus:border-[var(--crimson)] focus:outline-none transition-colors"
       />
-
-      {/* Horizontal glow lines */}
-      <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sky-500/20 to-transparent" />
-      <div className="absolute bottom-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
-
-      {/* Grid */}
-      <div className="absolute inset-0 grid-bg opacity-10" />
-
-      <FloatingParticles />
-
-      <div ref={ref} className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-3 glass rounded-full px-5 py-2.5 border border-sky-500/20 mb-12"
-        >
-          <div className="w-2 h-2 rounded-full bg-sky-400" style={{ boxShadow: '0 0 8px #0ea5e9' }} />
-          <span className="text-sm text-white/60">Limited Early Access Available</span>
-          <div className="h-3 w-px bg-white/10" />
-          <span className="text-sm text-sky-400 font-medium">247 spots remaining</span>
-        </motion.div>
-
-        {/* Main headline */}
-        <motion.h2
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="display-xl text-white mb-6"
-        >
-          The future is
-          <br />
-          <span className="gradient-text">designed.</span>
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-lg text-white/40 max-w-xl mx-auto leading-relaxed mb-12"
-        >
-          Join the engineers, founders, and visionaries already building with the most powerful AI platform on the planet.
-        </motion.p>
-
-        {/* CTA buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
-        >
-          <button className="magnetic-btn group relative px-10 py-5 rounded-full overflow-hidden text-white font-semibold text-base">
-            <div className="absolute inset-0 bg-gradient-to-r from-sky-500 via-blue-500 to-violet-600" />
-            <div className="absolute inset-0 bg-gradient-to-r from-sky-400 via-blue-400 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <span className="relative z-10">Start Building Free →</span>
-          </button>
-          <button className="magnetic-btn px-10 py-5 rounded-full glass border border-white/10 text-white/60 hover:text-white font-medium text-base transition-colors duration-300">
-            Talk to Sales
-          </button>
-        </motion.div>
-
-        {/* Trust signals */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex flex-wrap items-center justify-center gap-6 text-sm text-white/25"
-        >
-          {[
-            '✓ No credit card required',
-            '✓ SOC2 Type II certified',
-            '✓ GDPR compliant',
-            '✓ 99.97% uptime SLA',
-          ].map((item) => (
-            <span key={item}>{item}</span>
-          ))}
-        </motion.div>
-
-        {/* Decorative rings */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none">
-          {[1, 2, 3].map((i) => (
-            <motion.div
-              key={i}
-              className="absolute inset-0 rounded-full border border-white/3"
-              style={{ transform: `scale(${i * 0.4})` }}
-              animate={{ opacity: [0.3, 0.1, 0.3] }}
-              transition={{ duration: 4, delay: i * 0.8, repeat: Infinity }}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
+    </div>
   );
 }

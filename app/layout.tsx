@@ -2,9 +2,17 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NexusAI — Machine Speed. Human Soul.",
-  description: "The AI platform for the next generation of builders. Sub-2ms inference, infinite context, and adaptive intelligence that learns your domain.",
-  keywords: "AI platform, machine learning, artificial intelligence, inference, NexusAI",
+  title: "RŌNIN — Game Development Studio · We Forge Worlds",
+  description:
+    "RŌNIN is an independent game development studio crafting cinematic, soul-driven worlds. Original IP, work-for-hire, art direction, and engine craft from concept to launch.",
+  keywords:
+    "game development studio, indie games, game design, 3D art, game art direction, RŌNIN, narrative design, video game studio",
+  openGraph: {
+    title: "RŌNIN — We Forge Worlds",
+    description:
+      "An independent game development studio crafting cinematic, soul-driven worlds.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

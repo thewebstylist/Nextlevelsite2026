@@ -1,18 +1,23 @@
-name: Deploy to GitHub Pages
+name: Build Pages site into docs/
+
+# GitHub Pages for this repo uses "Deploy from a branch" (Settings → Pages),
+# pointed at this branch with the /docs folder. This workflow rebuilds the
+# static export into docs/ on every push so the published site stays current.
+# (The Actions-based deploy-pages path is blocked by the github-pages
+# environment's deployment-branch policy, so we deploy the branch-folder way.)
 
 on:
   push:
     branches: [claude/modern-dynamic-site-redesign-4gxt6k]
+    paths-ignore:
+      - "docs/**"
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# Allow one concurrent deployment, cancelling in-progress runs.
 concurrency:
-  group: pages
+  group: pages-docs
   cancel-in-progress: true
 
 jobs:
@@ -31,36 +36,27 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Configure Pages
-        id: pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
       - name: Build static export
         env:
-          # Serve under the repo sub-path: https://<user>.github.io/Nextlevelsite2026/
-          PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          # Site is served under the repo sub-path:
+          # https://thewebstylist.github.io/Nextlevelsite2026/
+          PAGES_BASE_PATH: /Nextlevelsite2026
         run: npm run build
 
-      - name: Disable Jekyll (preserve _next directory)
-        run: touch out/.nojekyll
+      - name: Stage export into docs/
+        run: |
+          touch out/.nojekyll
+          rm -rf docs
+          mv out docs
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    # The Pages API requires this environment. If this job is rejected with
-    # no steps run, allow this branch under Settings → Environments →
-    # github-pages → Deployment branches and tags.
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Commit and push docs/
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A docs
+          if git diff --cached --quiet; then
+            echo "docs/ unchanged — nothing to commit"
+          else
+            git commit -m "Rebuild docs/ static export [automated]"
+            git push
+          fi

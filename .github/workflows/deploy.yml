@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [claude/modern-dynamic-website-1101zq]
+    branches: [claude/modern-dynamic-site-redesign-4gxt6k]
   workflow_dispatch:
 
 permissions:

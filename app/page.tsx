@@ -1,32 +1,24 @@
 import SmoothScroll from './components/SmoothScroll';
-import Atmosphere from './components/Atmosphere';
-import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import MarqueeStrip from './components/MarqueeStrip';
-import StudioSection from './components/StudioSection';
-import GamesShowcase from './components/GamesShowcase';
-import CraftSection from './components/CraftSection';
-import MetricsSection from './components/MetricsSection';
-import ProcessSection from './components/ProcessSection';
-import TestimonialsSection from './components/TestimonialsSection';
-import CTASection from './components/CTASection';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import Marquee from './components/Marquee';
+import Services from './components/Services';
+import Studio from './components/Studio';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 export default function Home() {
   return (
     <SmoothScroll>
-      <Atmosphere />
-      <div className="min-h-screen bg-[var(--bg)] text-[var(--bone)] overflow-x-hidden">
-        <Navbar />
-        <HeroSection />
-        <MarqueeStrip />
-        <StudioSection />
-        <GamesShowcase />
-        <CraftSection />
-        <MetricsSection />
-        <ProcessSection />
-        <TestimonialsSection />
-        <CTASection />
+      <div className="min-h-screen overflow-x-hidden">
+        <Header />
+        <main>
+          <Hero />
+          <Marquee />
+          <Services />
+          <Studio />
+          <Contact />
+        </main>
         <Footer />
       </div>
     </SmoothScroll>

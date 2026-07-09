@@ -54,9 +54,12 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    # No `environment:` block — the auto-created github-pages environment
-    # carries a deployment-branch policy that rejects this branch before the
-    # job can start. deploy-pages still targets Pages via the API.
+    # The Pages API requires this environment. If this job is rejected with
+    # no steps run, allow this branch under Settings → Environments →
+    # github-pages → Deployment branches and tags.
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

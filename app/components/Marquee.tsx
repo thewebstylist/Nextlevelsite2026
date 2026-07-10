@@ -20,7 +20,7 @@ export default function Marquee() {
             className="mx-6 flex shrink-0 items-center gap-6 whitespace-nowrap text-[0.78rem] uppercase tracking-[0.26em] text-[var(--muted)]"
           >
             {item}
-            <span aria-hidden className="text-[var(--gold-2)]">✦</span>
+            <span aria-hidden className="text-[var(--brand-2)]">✦</span>
           </span>
         ))}
       </div>

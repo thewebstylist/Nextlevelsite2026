@@ -1,20 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Michroma, Space_Grotesk, Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { BRAND, SITE_URL } from "./config";
 import "./globals.css";
 
-const logoFont = Michroma({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-logo",
-});
-
-const displayFont = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
-});
-
-const bodyFont = Inter({
+// The whole brand runs on Montserrat (matching sterlingcreations.ai);
+// the three variables are kept so type roles stay independently tunable.
+const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-body",
 });
@@ -52,8 +43,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f5f1" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0c" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#060608" },
   ],
 };
 
@@ -70,7 +61,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="light"
-      className={`${logoFont.variable} ${displayFont.variable} ${bodyFont.variable}`}
+      className={montserrat.variable}
       suppressHydrationWarning
     >
       <head>

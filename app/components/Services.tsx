@@ -54,7 +54,7 @@ export default function Services() {
       <Reveal>
         <p className="eyebrow mb-4">What We Create</p>
         <h2 className="display-lg max-w-[16ch]">
-          Every medium. One <span className="gold-text">next-level</span> standard.
+          Every medium. One <span className="brand-text">next-level</span> standard.
         </h2>
       </Reveal>
 
@@ -64,11 +64,11 @@ export default function Services() {
             <div className="card group h-full p-7">
               <span
                 className="mb-6 grid h-12 w-12 place-items-center rounded-2xl transition-transform duration-500 group-hover:scale-110"
-                style={{ background: 'var(--gold-soft)' }}
+                style={{ background: 'var(--brand-soft)' }}
               >
                 <svg
                   viewBox="0 0 24 24"
-                  className="h-6 w-6 text-[var(--gold)]"
+                  className="h-6 w-6 text-[var(--brand)]"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.7"

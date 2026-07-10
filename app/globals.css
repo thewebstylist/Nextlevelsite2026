@@ -2,51 +2,52 @@
 
 /* ───────────────────────── THEME TOKENS ───────────────────────── */
 
+/* Brand: SC Ai neon — pink #ff2bd6 → violet #a855f7 → blue #2fb6ff on black & white. */
 :root,
 :root[data-theme="light"] {
-  --bg: #f6f5f1;
-  --bg-2: #edece6;
+  --bg: #ffffff;
+  --bg-2: #f4f4f8;
   --panel: #ffffff;
-  --panel-2: #fbfaf7;
-  --ink: #14151a;
-  --ink-2: #3a3d45;
-  --muted: #666d79;
-  --line: rgba(20, 21, 26, 0.09);
-  --line-strong: rgba(20, 21, 26, 0.16);
+  --panel-2: #f8f8fb;
+  --ink: #0b0b10;
+  --ink-2: #33343d;
+  --muted: #5f6270;
+  --line: rgba(11, 11, 16, 0.09);
+  --line-strong: rgba(11, 11, 16, 0.18);
 
-  --gold-1: #a37a28;
-  --gold-2: #c9a24b;
-  --gold-3: #edd694;
-  --gold: #a37a28;
-  --gold-soft: rgba(201, 162, 75, 0.14);
+  --brand-1: #ff2bd6;
+  --brand-2: #a855f7;
+  --brand-3: #2fb6ff;
+  --brand: #d311ae;
+  --brand-soft: rgba(255, 43, 214, 0.09);
 
-  --glass: rgba(246, 245, 241, 0.72);
-  --shadow: 0 24px 60px -24px rgba(20, 21, 26, 0.18);
-  --aurora-opacity: 0.5;
-  --hero-veil: rgba(246, 245, 241, 0.55);
+  --glass: rgba(255, 255, 255, 0.72);
+  --shadow: 0 24px 60px -24px rgba(11, 11, 16, 0.2);
+  --aurora-opacity: 0.4;
+  --hero-veil: rgba(255, 255, 255, 0.62);
 }
 
 :root[data-theme="dark"] {
-  --bg: #0a0a0c;
-  --bg-2: #101014;
-  --panel: #141519;
-  --panel-2: #17181d;
-  --ink: #f0efe9;
-  --ink-2: #c8c9c4;
-  --muted: #989fa9;
-  --line: rgba(240, 239, 233, 0.1);
-  --line-strong: rgba(240, 239, 233, 0.2);
+  --bg: #060608;
+  --bg-2: #0c0c12;
+  --panel: #111118;
+  --panel-2: #14141c;
+  --ink: #f5f5f8;
+  --ink-2: #c9cad4;
+  --muted: #9b9daa;
+  --line: rgba(245, 245, 248, 0.1);
+  --line-strong: rgba(245, 245, 248, 0.2);
 
-  --gold-1: #b98d33;
-  --gold-2: #d9b45b;
-  --gold-3: #f4e3a9;
-  --gold: #d9b45b;
-  --gold-soft: rgba(217, 180, 91, 0.12);
+  --brand-1: #ff4fe0;
+  --brand-2: #b06cff;
+  --brand-3: #45c1ff;
+  --brand: #ff4fe0;
+  --brand-soft: rgba(255, 79, 224, 0.12);
 
-  --glass: rgba(10, 10, 12, 0.6);
-  --shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.65);
-  --aurora-opacity: 0.42;
-  --hero-veil: rgba(10, 10, 12, 0.52);
+  --glass: rgba(6, 6, 8, 0.62);
+  --shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
+  --aurora-opacity: 0.5;
+  --hero-veil: rgba(6, 6, 8, 0.55);
 }
 
 /* ───────────────────────── BASE ───────────────────────── */
@@ -69,8 +70,8 @@
 
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg-2); }
-  ::-webkit-scrollbar-thumb { background: var(--gold-2); border-radius: 2px; }
-  ::selection { background: var(--gold-2); color: #14151a; }
+  ::-webkit-scrollbar-thumb { background: var(--brand-2); border-radius: 2px; }
+  ::selection { background: var(--brand-1); color: #ffffff; }
 }
 
 html.lenis, html.lenis body { height: auto; }
@@ -83,52 +84,52 @@ html.lenis, html.lenis body { height: auto; }
 
 @layer components {
 .font-logo {
-  font-family: var(--font-logo), sans-serif;
+  font-family: var(--font-body), sans-serif;
   letter-spacing: 0.22em;
 }
 
 .font-display {
-  font-family: var(--font-display), sans-serif;
+  font-family: var(--font-body), sans-serif;
   letter-spacing: -0.03em;
 }
 
 .display-xl {
-  font-family: var(--font-display), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: clamp(2.7rem, 7.2vw, 6.4rem);
   line-height: 1.02;
   letter-spacing: -0.035em;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .display-lg {
-  font-family: var(--font-display), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: clamp(2rem, 4.6vw, 3.9rem);
   line-height: 1.06;
   letter-spacing: -0.03em;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .eyebrow {
-  font-family: var(--font-logo), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: 0.68rem;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--brand);
 }
 
 /* ───────────────────────── EFFECTS ───────────────────────── */
 
-.gold-text {
-  background: linear-gradient(100deg, var(--gold-1) 0%, var(--gold-2) 42%, var(--gold-3) 58%, var(--gold-1) 100%);
+.brand-text {
+  background: linear-gradient(100deg, var(--brand-1) 0%, var(--brand-2) 42%, var(--brand-3) 58%, var(--brand-1) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: gold-shimmer 7s ease-in-out infinite;
+  animation: brand-shimmer 7s ease-in-out infinite;
 }
 
-@keyframes gold-shimmer {
+@keyframes brand-shimmer {
   0%, 100% { background-position: 0% center; }
   50% { background-position: 100% center; }
 }
@@ -149,31 +150,31 @@ html.lenis, html.lenis body { height: auto; }
 
 .card:hover {
   transform: translateY(-6px);
-  border-color: color-mix(in srgb, var(--gold-2) 45%, transparent);
+  border-color: color-mix(in srgb, var(--brand-2) 45%, transparent);
   box-shadow: var(--shadow);
 }
 
-.btn-gold {
+.btn-brand {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
   border-radius: 999px;
-  background: linear-gradient(115deg, var(--gold-1), var(--gold-2) 55%, var(--gold-3));
-  color: #17130a;
-  font-weight: 600;
+  background: linear-gradient(115deg, var(--brand-1), var(--brand-2) 50%, var(--brand-3));
+  color: #ffffff;
+  font-weight: 700;
   overflow: hidden;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
-  box-shadow: 0 10px 30px -12px rgba(163, 122, 40, 0.55);
+  box-shadow: 0 10px 30px -12px rgba(255, 43, 214, 0.5), 0 10px 30px -12px rgba(47, 182, 255, 0.4);
 }
 
-.btn-gold:hover {
+.btn-brand:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 18px 40px -14px rgba(163, 122, 40, 0.7);
+  box-shadow: 0 18px 40px -14px rgba(255, 43, 214, 0.65), 0 18px 40px -14px rgba(47, 182, 255, 0.55);
 }
 
-.btn-gold::after {
+.btn-brand::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -182,7 +183,7 @@ html.lenis, html.lenis body { height: auto; }
   transition: transform 0.7s ease;
 }
 
-.btn-gold:hover::after { transform: translateX(120%); }
+.btn-brand:hover::after { transform: translateX(120%); }
 
 .btn-ghost {
   display: inline-flex;
@@ -198,8 +199,8 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 .btn-ghost:hover {
-  border-color: var(--gold-2);
-  background: var(--gold-soft);
+  border-color: var(--brand-2);
+  background: var(--brand-soft);
   transform: translateY(-2px);
 }
 
@@ -220,7 +221,7 @@ html.lenis, html.lenis body { height: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
-  .gold-text { animation: none; }
+  .brand-text { animation: none; }
   html { scroll-behavior: auto; }
 }
 }

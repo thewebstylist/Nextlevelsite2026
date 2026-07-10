@@ -27,7 +27,7 @@ export default function Studio() {
           <Reveal>
             <p className="eyebrow mb-4">The Studio</p>
             <h2 className="display-lg max-w-[14ch]">
-              Our eye is on the <span className="gold-text">future</span>.
+              Our eye is on the <span className="brand-text">future</span>.
             </h2>
             <p className="mt-7 max-w-[520px] text-[1.02rem] leading-relaxed text-[var(--muted)]">
               Sterling Creations Ai is the next-level content studio from The Web
@@ -50,7 +50,7 @@ export default function Studio() {
           {pillars.map((p, i) => (
             <Reveal key={p.title} delay={0.1 * i}>
               <div className="card flex gap-5 p-6">
-                <span className="font-logo mt-1 shrink-0 text-[0.7rem] text-[var(--gold)]">
+                <span className="font-logo mt-1 shrink-0 text-[0.7rem] text-[var(--brand)]">
                   0{i + 1}
                 </span>
                 <div>

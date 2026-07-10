@@ -14,7 +14,7 @@ export default function Footer() {
             href={LINKS.webStylist}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--gold)] transition-opacity hover:opacity-75"
+            className="text-[var(--brand)] transition-opacity hover:opacity-75"
           >
             The Web Stylist™
           </a>
@@ -23,7 +23,7 @@ export default function Footer() {
           href={LINKS.site}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[0.75rem] uppercase tracking-[0.22em] text-[var(--muted)] transition-colors hover:text-[var(--gold)]"
+          className="text-[0.75rem] uppercase tracking-[0.22em] text-[var(--muted)] transition-colors hover:text-[var(--brand)]"
         >
           sterlingcreations.ai ↗
         </a>

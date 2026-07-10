@@ -63,7 +63,7 @@ export default function Contact() {
         <Reveal className="text-center">
           <p className="eyebrow mb-4">Contact</p>
           <h2 className="display-lg mx-auto max-w-[15ch]">
-            Let&rsquo;s create something <span className="gold-text">next level</span>.
+            Let&rsquo;s create something <span className="brand-text">next level</span>.
           </h2>
           <p className="mx-auto mt-6 max-w-[480px] text-[1rem] leading-relaxed text-[var(--muted)]">
             Tell us about your brand, your audience and your ambition — we&rsquo;ll
@@ -77,9 +77,9 @@ export default function Contact() {
             <a href={CONTACT.emailHref} className="card group flex items-center gap-5 p-7">
               <span
                 className="grid h-13 w-13 shrink-0 place-items-center rounded-2xl p-3.5 transition-transform duration-500 group-hover:scale-110"
-                style={{ background: 'var(--gold-soft)' }}
+                style={{ background: 'var(--brand-soft)' }}
               >
-                <svg viewBox="0 0 24 24" className="h-6 w-6 text-[var(--gold)]" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <svg viewBox="0 0 24 24" className="h-6 w-6 text-[var(--brand)]" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" />
                   <path d="m3 7 9 6.2L21 7" />
                 </svg>
@@ -88,7 +88,7 @@ export default function Contact() {
                 <span className="block text-[0.7rem] uppercase tracking-[0.24em] text-[var(--muted)]">
                   Email the Studio
                 </span>
-                <span className="mt-1 block font-display text-lg font-semibold tracking-tight transition-colors group-hover:text-[var(--gold)]">
+                <span className="mt-1 block font-display text-lg font-semibold tracking-tight transition-colors group-hover:text-[var(--brand)]">
                   {CONTACT.email}
                 </span>
               </span>
@@ -97,9 +97,9 @@ export default function Contact() {
             <a href={CONTACT.phoneHref} className="card group flex items-center gap-5 p-7">
               <span
                 className="grid h-13 w-13 shrink-0 place-items-center rounded-2xl p-3.5 transition-transform duration-500 group-hover:scale-110"
-                style={{ background: 'var(--gold-soft)' }}
+                style={{ background: 'var(--brand-soft)' }}
               >
-                <svg viewBox="0 0 24 24" className="h-6 w-6 text-[var(--gold)]" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <svg viewBox="0 0 24 24" className="h-6 w-6 text-[var(--brand)]" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z" />
                 </svg>
               </span>
@@ -107,7 +107,7 @@ export default function Contact() {
                 <span className="block text-[0.7rem] uppercase tracking-[0.24em] text-[var(--muted)]">
                   Call — {CONTACT.phoneNumeric}
                 </span>
-                <span className="mt-1 block font-display text-lg font-semibold tracking-tight transition-colors group-hover:text-[var(--gold)]">
+                <span className="mt-1 block font-display text-lg font-semibold tracking-tight transition-colors group-hover:text-[var(--brand)]">
                   {CONTACT.phoneDisplay}
                 </span>
               </span>
@@ -126,7 +126,7 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 className="card flex items-center gap-3 rounded-full px-5 py-3"
               >
-                <svg viewBox="0 0 24 24" className="h-4.5 w-4.5 text-[var(--gold)]" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <svg viewBox="0 0 24 24" className="h-4.5 w-4.5 text-[var(--brand)]" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   {s.icon}
                 </svg>
                 <span className="text-[0.82rem] font-medium">{s.label}</span>

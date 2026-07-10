@@ -49,7 +49,7 @@ export default function Header() {
               className="group relative text-[0.8rem] font-medium uppercase tracking-[0.2em] text-[var(--muted)] transition-colors hover:text-[var(--ink)]"
             >
               {link.label}
-              <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-[var(--gold-2)] transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-[var(--brand-2)] transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </nav>
@@ -58,7 +58,7 @@ export default function Header() {
           <ThemeToggle />
           <a
             href={CONTACT.emailHref}
-            className="btn-gold hidden px-5 py-2.5 text-[0.8rem] uppercase tracking-[0.14em] sm:inline-flex"
+            className="btn-brand hidden px-5 py-2.5 text-[0.8rem] uppercase tracking-[0.14em] sm:inline-flex"
           >
             Start a Project
           </a>
@@ -110,7 +110,7 @@ export default function Header() {
               <a
                 href={CONTACT.emailHref}
                 onClick={() => setMenuOpen(false)}
-                className="btn-gold mb-2 mt-2 px-5 py-3 text-[0.8rem] uppercase tracking-[0.14em]"
+                className="btn-brand mb-2 mt-2 px-5 py-3 text-[0.8rem] uppercase tracking-[0.14em]"
               >
                 Start a Project
               </a>

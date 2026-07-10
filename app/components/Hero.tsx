@@ -68,7 +68,7 @@ export default function Hero() {
           transition={{ duration: 1, ease: EASE, delay: 0.42 }}
           className="display-xl max-w-[13ch]"
         >
-          Next Level <span className="gold-text">Ai&#8209;Assisted</span> Content Creation
+          Next Level <span className="brand-text">Ai&#8209;Assisted</span> Content Creation
         </motion.h1>
 
         <motion.p
@@ -90,7 +90,7 @@ export default function Hero() {
         >
           <a
             href={CONTACT.emailHref}
-            className="btn-gold px-8 py-4 text-[0.85rem] uppercase tracking-[0.14em]"
+            className="btn-brand px-8 py-4 text-[0.85rem] uppercase tracking-[0.14em]"
           >
             Start a Project
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -115,7 +115,7 @@ export default function Hero() {
           href={LINKS.site}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 inline-block text-[0.78rem] uppercase tracking-[0.24em] text-[var(--muted)] transition-colors hover:text-[var(--gold)]"
+          className="mt-6 inline-block text-[0.78rem] uppercase tracking-[0.24em] text-[var(--muted)] transition-colors hover:text-[var(--brand)]"
         >
           sterlingcreations.ai ↗
         </motion.a>
@@ -130,7 +130,7 @@ export default function Hero() {
           {stats.map((s) => (
             <div key={s.label} className="card px-6 py-5">
               <div className="font-display text-3xl font-semibold">
-                <span className="gold-text">{s.value}</span>
+                <span className="brand-text">{s.value}</span>
               </div>
               <div className="mt-1.5 text-[0.72rem] uppercase tracking-[0.16em] text-[var(--muted)]">
                 {s.label}
@@ -152,7 +152,7 @@ export default function Hero() {
           <motion.span
             animate={{ y: [0, 14, 0], opacity: [1, 0.2, 1] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-            className="block h-2 w-1 rounded-full bg-[var(--gold-2)]"
+            className="block h-2 w-1 rounded-full bg-[var(--brand-2)]"
           />
         </div>
       </motion.div>

@@ -45,7 +45,7 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="relative inline-flex h-9 w-[64px] shrink-0 items-center rounded-full border border-[var(--line-strong)] bg-[var(--panel)] px-1 transition-colors duration-300 hover:border-[var(--gold-2)]"
+      className="relative inline-flex h-9 w-[64px] shrink-0 items-center rounded-full border border-[var(--line-strong)] bg-[var(--panel)] px-1 transition-colors duration-300 hover:border-[var(--brand-2)]"
     >
       {/* Sun */}
       <svg
@@ -74,10 +74,10 @@ export default function ThemeToggle() {
 
       {/* Thumb */}
       <span
-        className={`relative z-10 grid h-7 w-7 place-items-center rounded-full text-[#17130a] transition-transform duration-300 ${dark ? 'translate-x-[28px]' : 'translate-x-0'}`}
+        className={`relative z-10 grid h-7 w-7 place-items-center rounded-full text-white transition-transform duration-300 ${dark ? 'translate-x-[28px]' : 'translate-x-0'}`}
         style={{
           background:
-            'linear-gradient(135deg, var(--gold-1), var(--gold-2) 55%, var(--gold-3))',
+            'linear-gradient(135deg, var(--brand-1), var(--brand-2) 55%, var(--brand-3))',
         }}
       >
         {dark ? (

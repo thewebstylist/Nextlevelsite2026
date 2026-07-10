@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 type Blob = {
   x: number; y: number; r: number;
   dx: number; dy: number;
-  hueMix: number; // 0..1 blend between gold and neutral
+  hueMix: number; // 0..1 blend between pink and blue
 };
 
 type Particle = {
@@ -15,7 +15,7 @@ type Particle = {
 
 /**
  * Theme-aware animated "aurora + drifting particles" canvas.
- * Reads the gold tokens off the root element so it adapts when the
+ * Reads the brand tokens off the root element so it adapts when the
  * light/dark toggle flips, and respects prefers-reduced-motion.
  */
 export default function Aurora({ className = '' }: { className?: string }) {
@@ -32,14 +32,14 @@ export default function Aurora({ className = '' }: { className?: string }) {
     let w = 0;
     let h = 0;
     let raf = 0;
-    let gold1 = '#c9a24b';
-    let gold3 = '#edd694';
+    let pink = '#ff2bd6';
+    let blue = '#2fb6ff';
     let dark = false;
 
     const readTheme = () => {
       const cs = getComputedStyle(document.documentElement);
-      gold1 = cs.getPropertyValue('--gold-2').trim() || gold1;
-      gold3 = cs.getPropertyValue('--gold-3').trim() || gold3;
+      pink = cs.getPropertyValue('--brand-1').trim() || pink;
+      blue = cs.getPropertyValue('--brand-3').trim() || blue;
       dark = document.documentElement.getAttribute('data-theme') === 'dark';
     };
 
@@ -88,7 +88,7 @@ export default function Aurora({ className = '' }: { className?: string }) {
         if (b.y > h + b.r) b.y = -b.r * 0.5;
 
         const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
-        const core = b.hueMix > 0.6 ? gold1 : gold3;
+        const core = b.hueMix > 0.6 ? pink : blue;
         g.addColorStop(0, `${core}${dark ? '2e' : '30'}`);
         g.addColorStop(1, `${core}00`);
         ctx.fillStyle = g;
@@ -107,7 +107,7 @@ export default function Aurora({ className = '' }: { className?: string }) {
         if (p.x > w + 4) p.x = -4;
 
         const a = 0.18 + Math.abs(Math.sin(p.tw)) * (dark ? 0.5 : 0.35);
-        ctx.fillStyle = `${gold1}${Math.round(a * 255).toString(16).padStart(2, '0')}`;
+        ctx.fillStyle = `${blue}${Math.round(a * 255).toString(16).padStart(2, '0')}`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();

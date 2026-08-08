@@ -246,10 +246,7 @@ class NLM_Export {
 			'file'     => $name,
 			'size'     => $size,
 			'size_h'   => NLM_Utils::format_bytes( $size ),
-			'download' => wp_nonce_url(
-				admin_url( 'admin-ajax.php?action=nlm_download&file=' . rawurlencode( $name ) ),
-				'nlm_download_' . $name
-			),
+			'download' => NLM_Utils::download_url( $name ),
 		);
 	}
 

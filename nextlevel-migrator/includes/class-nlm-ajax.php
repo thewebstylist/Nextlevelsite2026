@@ -224,10 +224,7 @@ class NLM_Ajax {
 				'size'     => filesize( $path ),
 				'size_h'   => NLM_Utils::format_bytes( filesize( $path ) ),
 				'date'     => gmdate( 'Y-m-d H:i', filemtime( $path ) ),
-				'download' => wp_nonce_url(
-					admin_url( 'admin-ajax.php?action=nlm_download&file=' . rawurlencode( $name ) ),
-					'nlm_download_' . $name
-				),
+				'download' => NLM_Utils::download_url( $name ),
 			);
 		}
 

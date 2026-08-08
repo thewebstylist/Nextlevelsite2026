@@ -135,6 +135,28 @@ class NLM_Utils {
 	}
 
 	/**
+	 * Build a nonce-protected download URL for a backup file.
+	 *
+	 * NOTE: this is deliberately built with add_query_arg (raw "&") rather than
+	 * wp_nonce_url(), because the URL is delivered to the browser as JSON and
+	 * assigned via JS. wp_nonce_url() HTML-encodes the ampersands (&#038;),
+	 * which would then not be decoded and would corrupt the _wpnonce param.
+	 *
+	 * @param string $file Archive file name.
+	 * @return string
+	 */
+	public static function download_url( $file ) {
+		return add_query_arg(
+			array(
+				'action'   => 'nlm_download',
+				'file'     => $file,
+				'_wpnonce' => wp_create_nonce( 'nlm_download_' . $file ),
+			),
+			admin_url( 'admin-ajax.php' )
+		);
+	}
+
+	/**
 	 * Generate a filesystem- and URL-safe archive name for this site.
 	 *
 	 * @return string

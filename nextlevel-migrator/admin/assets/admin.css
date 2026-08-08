@@ -1,0 +1,156 @@
+/* Next Level Migrator admin styles */
+
+.nlm-wrap {
+	max-width: 820px;
+}
+
+.nlm-title .dashicons {
+	font-size: 30px;
+	width: 30px;
+	height: 30px;
+	vertical-align: middle;
+	color: #2271b1;
+}
+
+.nlm-subtitle {
+	font-size: 14px;
+	color: #50575e;
+	margin-top: 4px;
+}
+
+.nlm-tabs {
+	margin-top: 18px;
+}
+
+.nlm-card {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	padding: 24px 28px;
+	margin-top: 18px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.nlm-card h2 {
+	margin-top: 0;
+}
+
+.nlm-facts {
+	list-style: none;
+	margin: 16px 0 22px;
+	padding: 16px 20px;
+	background: #f6f7f7;
+	border-radius: 6px;
+}
+
+.nlm-facts li {
+	margin: 4px 0;
+	color: #3c434a;
+}
+
+.button-hero .dashicons {
+	vertical-align: middle;
+	margin-right: 4px;
+	margin-top: -2px;
+}
+
+/* Progress bar */
+.nlm-progress {
+	margin-top: 22px;
+}
+
+.nlm-progress-bar {
+	height: 22px;
+	background: #e9e9ea;
+	border-radius: 11px;
+	overflow: hidden;
+}
+
+.nlm-progress-bar span {
+	display: block;
+	height: 100%;
+	width: 0;
+	background: linear-gradient(90deg, #2271b1, #3ca0ff);
+	transition: width 0.35s ease;
+	border-radius: 11px;
+}
+
+.nlm-progress-msg {
+	margin: 10px 2px 0;
+	color: #50575e;
+	font-size: 13px;
+}
+
+/* Results */
+.nlm-result,
+.nlm-error {
+	margin-top: 22px;
+	padding: 12px 16px;
+}
+
+.nlm-result .dashicons-yes-alt {
+	color: #00a32a;
+	vertical-align: middle;
+}
+
+.nlm-result .button {
+	margin-left: 10px;
+	vertical-align: middle;
+}
+
+.nlm-result-meta {
+	margin-left: 10px;
+	color: #50575e;
+}
+
+/* Dropzone */
+.nlm-dropzone {
+	border: 2px dashed #c3c4c7;
+	border-radius: 8px;
+	padding: 34px 20px;
+	text-align: center;
+	color: #50575e;
+	margin: 8px 0 20px;
+	transition: border-color 0.2s, background 0.2s;
+}
+
+.nlm-dropzone.nlm-dragover {
+	border-color: #2271b1;
+	background: #f0f6fc;
+}
+
+.nlm-dropzone .dashicons-upload {
+	font-size: 36px;
+	width: 36px;
+	height: 36px;
+	color: #2271b1;
+}
+
+.nlm-chosen {
+	font-weight: 600;
+	color: #1d2327;
+	margin-bottom: 0;
+}
+
+.nlm-warn {
+	margin: 0 0 18px;
+}
+
+.nlm-warn .dashicons,
+.nlm-facts + * .dashicons {
+	vertical-align: middle;
+}
+
+/* Backups table */
+.nlm-backups {
+	margin-top: 12px;
+}
+
+.nlm-backups td,
+.nlm-backups th {
+	vertical-align: middle;
+}
+
+.nlm-backups .nlm-actions .button {
+	margin-right: 6px;
+}

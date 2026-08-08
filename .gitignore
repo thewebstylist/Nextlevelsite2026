@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# built plugin archive (generated from nextlevel-migrator/)
+/nextlevel-migrator.zip
+
 # debug
 npm-debug.log*
 yarn-debug.log*

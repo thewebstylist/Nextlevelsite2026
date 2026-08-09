@@ -3,7 +3,7 @@
  * Plugin Name:       Next Level Migrator
  * Plugin URI:        https://github.com/thewebstylist/nextlevelsite2026
  * Description:        Export any WordPress website (database + media + themes + plugins) into a single portable .zip file, then import it onto any other WordPress install with automatic, serialized-safe URL and path replacement.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Requires at least: 5.6
  * Requires PHP:      7.2
  * Author:            The Web Stylist
@@ -17,7 +17,7 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-define( 'NLM_VERSION', '1.0.2' );
+define( 'NLM_VERSION', '1.0.3' );
 define( 'NLM_PLUGIN_FILE', __FILE__ );
 define( 'NLM_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NLM_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

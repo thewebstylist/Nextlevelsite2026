@@ -25,6 +25,10 @@
 
 	function showError( $box, message ) {
 		$box.prop( 'hidden', false ).find( 'p' ).text( message );
+		// Make sure the user actually sees it (errors sit below the progress bar).
+		if ( $box.get( 0 ) && $box.get( 0 ).scrollIntoView ) {
+			$box.get( 0 ).scrollIntoView( { behavior: 'smooth', block: 'center' } );
+		}
 	}
 
 	/* -------------------------------------------------------------- Export */
@@ -164,7 +168,9 @@
 			if ( next < total ) {
 				uploadChunks( next );
 			} else {
-				setProgress( $importProgress, 100, i18n.uploading + ' ' + humanSize( total ) + ' / ' + humanSize( total ) );
+				// Upload finished; hand off to the processing phase. Show the
+				// phase change immediately so it doesn't look stuck at 100%.
+				setProgress( $importProgress, 100, 'Upload complete — processing archive…' );
 				importStep();
 			}
 		};
@@ -209,9 +215,13 @@
 			}
 			setProgress( $importProgress, d.percent, d.message );
 			importStep();
-		} ).fail( function () {
+		} ).fail( function ( xhr ) {
 			$importBtn.prop( 'disabled', false );
-			showError( $importError, i18n.importError );
+			var extra = xhr && xhr.status ? ' (HTTP ' + xhr.status + ')' : '';
+			var srvMsg = xhr && xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message
+				? ' ' + xhr.responseJSON.data.message
+				: '';
+			showError( $importError, i18n.importError + extra + srvMsg );
 		} );
 	}
 

@@ -121,13 +121,22 @@ class NLM_Import {
 		NLM_Utils::rrmdir( $work_dir );
 		wp_mkdir_p( $work_dir );
 
-		$sql_raw = $zip->getFromName( 'database.sql' );
-		if ( false === $sql_raw ) {
+		// Stream the SQL dump out of the zip rather than loading it whole into
+		// memory (it can be hundreds of MB on a large site).
+		$sql_stream = $zip->getStream( 'database.sql' );
+		if ( ! $sql_stream ) {
 			$zip->close();
 			return $this->error( __( 'The archive does not contain a database dump.', 'nextlevel-migrator' ) );
 		}
-		file_put_contents( $work_dir . 'database.sql', $sql_raw ); // phpcs:ignore WordPress.WP.AlternativeFunctions
-		unset( $sql_raw );
+		$sql_out = fopen( $work_dir . 'database.sql', 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+		if ( ! $sql_out ) {
+			fclose( $sql_stream ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+			$zip->close();
+			return $this->error( __( 'Could not write the database dump to disk (check free space and permissions).', 'nextlevel-migrator' ) );
+		}
+		stream_copy_to_stream( $sql_stream, $sql_out );
+		fclose( $sql_out );    // phpcs:ignore WordPress.WP.AlternativeFunctions
+		fclose( $sql_stream ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 
 		// Index the content files inside the archive.
 		$source_content = isset( $manifest['content_dir'] ) ? trim( $manifest['content_dir'], '/' ) : 'wp-content';
@@ -396,6 +405,18 @@ class NLM_Import {
 		if ( $zip_path && file_exists( $zip_path ) && ! $this->status->get( 'keep_zip' ) ) {
 			@unlink( $zip_path ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
 		}
+		$this->status->clear();
+	}
+
+	/**
+	 * Forget an abandoned job's state WITHOUT deleting files on disk.
+	 *
+	 * Used to clear stale status so a fresh import is never blocked by a
+	 * previously interrupted one; the just-uploaded archive is preserved.
+	 *
+	 * @return void
+	 */
+	public function forget() {
 		$this->status->clear();
 	}
 

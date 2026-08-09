@@ -114,20 +114,27 @@ class NLM_Ajax {
 		$running_token = $import->running_token();
 		$sent_token    = isset( $_REQUEST['token'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['token'] ) ) : '';
 
-		if ( '' !== $running_token ) {
-			// A job is in flight: authorize purely by its token.
+		if ( '' !== $sent_token ) {
+			// Continuing an in-flight job: authorize purely by its token.
 			if ( ! hash_equals( $running_token, $sent_token ) ) {
-				wp_send_json_error( array( 'message' => __( 'Invalid or expired import session.', 'nextlevel-migrator' ) ), 403 );
+				wp_send_json_error( array( 'message' => __( 'Invalid or expired import session. Reload the page and start the import again.', 'nextlevel-migrator' ) ), 403 );
 			}
 		} else {
-			// Starting fresh: require the normal admin nonce + capability.
+			// Fresh start from the admin UI: require nonce + capability.
 			NLM_Utils::verify_request();
+			// Self-heal: discard any stale/abandoned job so a previously
+			// interrupted import can't block this one. Files on disk (the
+			// just-uploaded archive) are preserved.
+			if ( '' !== $running_token ) {
+				$import->forget();
+				$import = new NLM_Import();
+			}
 		}
 
 		// 'backup' is only honored on the fresh/init call (verified above); it
 		// lets the user restore an archive already stored on the server.
 		$args = array();
-		if ( '' === $running_token && isset( $_REQUEST['backup'] ) ) {
+		if ( '' === $sent_token && isset( $_REQUEST['backup'] ) ) {
 			$args['backup'] = sanitize_file_name( wp_unslash( $_REQUEST['backup'] ) );
 		}
 

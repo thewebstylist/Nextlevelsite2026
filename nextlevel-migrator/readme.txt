@@ -4,7 +4,7 @@ Tags: migration, backup, export, import, clone, move, duplicate, transfer
 Requires at least: 5.6
 Tested up to: 6.6
 Requires PHP: 7.2
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,12 @@ No. Everything is done in PHP using WordPress's own database layer and the
 `ZipArchive` extension.
 
 == Changelog ==
+
+= 1.0.2 =
+* New: "Restore" button on the Backups tab imports an archive that is already
+  stored on the server with no upload — ideal for restoring the current site.
+* Improved: the import upload now shows real, byte-accurate progress
+  (MB uploaded / total) instead of appearing stuck at 0% on large files.
 
 = 1.0.1 =
 * Fix: "The link you followed has expired" when downloading a backup. Download

@@ -128,38 +128,66 @@
 		form.append( 'append', offset > 0 ? '1' : '0' );
 		form.append( 'chunk', chunk );
 
-		$.ajax( {
-			url: NLM.ajaxUrl,
-			method: 'POST',
-			data: form,
-			processData: false,
-			contentType: false
-		} ).done( function ( res ) {
+		var total = importFile.size;
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'POST', NLM.ajaxUrl, true );
+
+		// Live, byte-accurate progress across the whole file.
+		xhr.upload.onprogress = function ( e ) {
+			if ( e.lengthComputable ) {
+				var sent = Math.min( total, offset + e.loaded );
+				var pct = Math.round( ( sent / total ) * 100 );
+				setProgress( $importProgress, pct, i18n.uploading + ' ' + humanSize( sent ) + ' / ' + humanSize( total ) );
+			}
+		};
+
+		xhr.onload = function () {
+			var res;
+			if ( xhr.status < 200 || xhr.status >= 300 ) {
+				$importBtn.prop( 'disabled', false );
+				showError( $importError, i18n.importError + ' (HTTP ' + xhr.status + ')' );
+				return;
+			}
+			try {
+				res = JSON.parse( xhr.responseText );
+			} catch ( err ) {
+				$importBtn.prop( 'disabled', false );
+				showError( $importError, i18n.importError );
+				return;
+			}
 			if ( ! res.success ) {
 				$importBtn.prop( 'disabled', false );
 				showError( $importError, ( res.data && res.data.message ) || i18n.importError );
 				return;
 			}
 			var next = offset + NLM.chunkSize;
-			var pct = Math.min( 100, Math.round( ( next / importFile.size ) * 100 ) );
-			setProgress( $importProgress, Math.min( 20, Math.round( pct * 0.2 ) ), i18n.uploading );
-			if ( next < importFile.size ) {
+			if ( next < total ) {
 				uploadChunks( next );
 			} else {
+				setProgress( $importProgress, 100, i18n.uploading + ' ' + humanSize( total ) + ' / ' + humanSize( total ) );
 				importStep();
 			}
-		} ).fail( function () {
+		};
+
+		xhr.onerror = function () {
 			$importBtn.prop( 'disabled', false );
 			showError( $importError, i18n.importError );
-		} );
+		};
+
+		xhr.send( form );
 	}
 
-	function importStep() {
-		$.post( NLM.ajaxUrl, {
+	function importStep( backupFile ) {
+		var data = {
 			action: 'nlm_import',
 			nonce: NLM.nonce,
 			token: importToken
-		} ).done( function ( res ) {
+		};
+		// Only meaningful on the first call (server ignores it once a job runs).
+		if ( backupFile ) {
+			data.backup = backupFile;
+		}
+		$.post( NLM.ajaxUrl, data ).done( function ( res ) {
 			if ( ! res.success ) {
 				$importBtn.prop( 'disabled', false );
 				showError( $importError, ( res.data && res.data.message ) || i18n.importError );
@@ -209,12 +237,29 @@
 			$tr.append( $( '<td/>' ).text( b.size_h ) );
 			$tr.append( $( '<td/>' ).text( b.date ) );
 			var $actions = $( '<td class="nlm-actions"/>' );
+			$( '<button class="button button-small button-primary nlm-restore"/>' ).text( 'Restore' ).data( 'file', b.file ).appendTo( $actions );
 			$( '<a class="button button-small"/>' ).attr( 'href', b.download ).text( 'Download' ).appendTo( $actions );
 			$( '<button class="button button-small nlm-delete"/>' ).text( 'Delete' ).data( 'file', b.file ).appendTo( $actions );
 			$tr.append( $actions );
 			$body.append( $tr );
 		} );
 	}
+
+	// Restore a backup that already lives on the server — no upload needed.
+	$( '#nlm-backups-body' ).on( 'click', '.nlm-restore', function () {
+		var file = $( this ).data( 'file' );
+		if ( ! window.confirm( i18n.confirmImport ) ) {
+			return;
+		}
+		// Switch to the Import tab so the user sees progress there.
+		$( '.nlm-tabs .nav-tab[data-tab="import"]' ).trigger( 'click' );
+		$importBtn.prop( 'disabled', true );
+		$importResult.prop( 'hidden', true );
+		$importError.prop( 'hidden', true );
+		importToken = '';
+		setProgress( $importProgress, 3, 'Starting restore…' );
+		importStep( file );
+	} );
 
 	$( '#nlm-backups-body' ).on( 'click', '.nlm-delete', function () {
 		if ( ! window.confirm( i18n.confirmDelete ) ) {

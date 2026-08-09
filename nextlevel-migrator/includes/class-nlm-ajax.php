@@ -124,7 +124,14 @@ class NLM_Ajax {
 			NLM_Utils::verify_request();
 		}
 
-		$result = $import->step();
+		// 'backup' is only honored on the fresh/init call (verified above); it
+		// lets the user restore an archive already stored on the server.
+		$args = array();
+		if ( '' === $running_token && isset( $_REQUEST['backup'] ) ) {
+			$args['backup'] = sanitize_file_name( wp_unslash( $_REQUEST['backup'] ) );
+		}
+
+		$result = $import->step( $args );
 		$this->respond( $result );
 	}
 

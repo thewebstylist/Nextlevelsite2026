@@ -50,14 +50,17 @@ class NLM_Import {
 	/**
 	 * Advance one step.
 	 *
+	 * @param array $args Optional args used only on the first (init) step,
+	 *                    e.g. array( 'backup' => 'file.zip' ) to restore an
+	 *                    archive that already lives on the server.
 	 * @return array
 	 */
-	public function step() {
+	public function step( $args = array() ) {
 		$stage = $this->status->get( 'stage', 'init' );
 
 		switch ( $stage ) {
 			case 'init':
-				return $this->init();
+				return $this->init( $args );
 			case 'files':
 				return $this->files();
 			case 'db_import':
@@ -76,12 +79,25 @@ class NLM_Import {
 	/**
 	 * Stage 1: read the archive manifest and prepare the job.
 	 *
+	 * @param array $args Optional. 'backup' => filename to restore an archive
+	 *                    already stored on the server (no upload needed).
 	 * @return array
 	 */
-	protected function init() {
-		$zip_path = NLM_Utils::tmp_dir() . 'import.zip';
-		if ( ! file_exists( $zip_path ) ) {
-			return $this->error( __( 'No uploaded archive was found. Please upload a .zip first.', 'nextlevel-migrator' ) );
+	protected function init( $args = array() ) {
+		// Restore directly from a server-side backup, or from an upload.
+		$keep_zip = false;
+		if ( ! empty( $args['backup'] ) ) {
+			$backup   = sanitize_file_name( $args['backup'] );
+			$zip_path = NLM_Utils::backups_dir() . $backup;
+			$keep_zip = true; // Never delete a stored backup after restoring it.
+			if ( ! file_exists( $zip_path ) || 'zip' !== strtolower( pathinfo( $zip_path, PATHINFO_EXTENSION ) ) ) {
+				return $this->error( __( 'The selected backup could not be found on the server.', 'nextlevel-migrator' ) );
+			}
+		} else {
+			$zip_path = NLM_Utils::tmp_dir() . 'import.zip';
+			if ( ! file_exists( $zip_path ) ) {
+				return $this->error( __( 'No uploaded archive was found. Please upload a .zip first.', 'nextlevel-migrator' ) );
+			}
 		}
 
 		$zip = new ZipArchive();
@@ -139,6 +155,7 @@ class NLM_Import {
 				'stage'          => 'files',
 				'token'          => $token,
 				'zip_path'       => $zip_path,
+				'keep_zip'       => $keep_zip,
 				'work_dir'       => $work_dir,
 				'manifest'       => $manifest,
 				'source_content' => $source_content,
@@ -337,7 +354,7 @@ class NLM_Import {
 			NLM_Utils::rrmdir( $work_dir );
 		}
 		$zip_path = $this->status->get( 'zip_path' );
-		if ( $zip_path && file_exists( $zip_path ) ) {
+		if ( $zip_path && file_exists( $zip_path ) && ! $this->status->get( 'keep_zip' ) ) {
 			@unlink( $zip_path ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
 		}
 
@@ -376,7 +393,7 @@ class NLM_Import {
 			NLM_Utils::rrmdir( $work_dir );
 		}
 		$zip_path = $this->status->get( 'zip_path' );
-		if ( $zip_path && file_exists( $zip_path ) ) {
+		if ( $zip_path && file_exists( $zip_path ) && ! $this->status->get( 'keep_zip' ) ) {
 			@unlink( $zip_path ); // phpcs:ignore WordPress.PHP.NoSilencedErrors
 		}
 		$this->status->clear();

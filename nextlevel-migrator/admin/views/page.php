@@ -79,6 +79,11 @@ foreach ( $nlm_tables as $nlm_t ) {
 				</p>
 			</div>
 
+			<p class="nlm-hint">
+				<span class="dashicons dashicons-info-outline"></span>
+				<?php esc_html_e( 'Restoring a backup that was exported on THIS server? Skip the upload — go to the Backups tab and click Restore.', 'nextlevel-migrator' ); ?>
+			</p>
+
 			<div class="nlm-dropzone" id="nlm-dropzone">
 				<span class="dashicons dashicons-upload"></span>
 				<p><?php esc_html_e( 'Drag a .zip archive here, or', 'nextlevel-migrator' ); ?></p>

@@ -136,6 +136,17 @@
 	margin: 0 0 18px;
 }
 
+.nlm-hint {
+	color: #50575e;
+	font-size: 13px;
+	margin: 0 0 14px;
+}
+
+.nlm-hint .dashicons {
+	vertical-align: middle;
+	color: #2271b1;
+}
+
 .nlm-warn .dashicons,
 .nlm-facts + * .dashicons {
 	vertical-align: middle;
